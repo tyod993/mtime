@@ -1,4 +1,5 @@
 import 'package:mtime/data/entities/time_entry.dart';
+import 'package:mtime/data/entities/time_entry_stat.dart';
 
 class TimeEntryInteractor {
   final TimeEntryReader _timeEntryReader;
@@ -7,6 +8,15 @@ class TimeEntryInteractor {
   TimeEntryInteractor(this._timeEntryReader, this._timeEntryWriter);
 
   Future<List<TimeEntry>> get getAllEntries => _timeEntryReader.getAllEntries();
+
+  Future<bool> addTimeEntry(TimeEntryStat stat) =>
+      _timeEntryWriter.addTimeEntry(stat);
+
+  Future<bool> updateEntry(TimeEntryStat stat) =>
+      _timeEntryWriter.updateTimeEntry(stat);
+
+  Future<bool> deleteEntry(TimeEntryStat stat) =>
+      _timeEntryWriter.deleteTimeEntry(stat);
 }
 
 class TimeEntryWriteException implements Exception {
@@ -20,9 +30,9 @@ abstract class TimeEntryReader {
 }
 
 abstract class TimeEntryWriter {
-  Future<bool> addTimeEntry(TimeEntry timeEntry);
+  Future<bool> addTimeEntry(TimeEntryStat stat);
 
-  Future<bool> editTimeEntry(TimeEntry timeEntry);
+  Future<bool> updateTimeEntry(TimeEntryStat stat);
 
-  Future<bool> deleteTimeEntry(TimeEntry timeEntry);
+  Future<bool> deleteTimeEntry(TimeEntryStat stat);
 }
